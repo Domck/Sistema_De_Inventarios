@@ -23,10 +23,23 @@ public class ProductoServicio implements IProductoServicio {
     }
 
     @Override
-    public void guardarProducto(Producto producto) {
-        this.productoRepositorio.save(producto);
-    }
+    /*public Producto guardarProducto(Producto producto) {
+       producto.setIdProducto(null);
+       return this.productoRepositorio.save(producto);
+    }*/
+    public Producto guardarProducto(Producto producto) {
+        if (producto.getIdProducto() == null) {
+            return this.productoRepositorio.save(producto);
+        } else {
+            Producto productoExistente = this.productoRepositorio.findById(producto.getIdProducto())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+            productoExistente.setDescripcion(producto.getDescripcion());
+            productoExistente.setPrecio(producto.getPrecio());
+            productoExistente.setExistencia(producto.getExistencia());
 
+            return this.productoRepositorio.save(productoExistente);
+        }
+    }
     @Override
     public void eliminarProductoPorId(Integer idProducto) {
         this.productoRepositorio.deleteById(idProducto);

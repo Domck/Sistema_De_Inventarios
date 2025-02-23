@@ -4,19 +4,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
 import jakarta.persistence.SequenceGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Getter
-@Setter
 public class Producto {
     @Id
-
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "producto_seq")
     @SequenceGenerator(name = "producto_seq", sequenceName = "producto_seq", allocationSize = 1)
 
@@ -24,6 +22,7 @@ public class Producto {
     private String descripcion;
     private Double precio;
     private Integer existencia;
+
 
     public Integer getIdProducto() {
         return idProducto;
@@ -56,4 +55,6 @@ public class Producto {
     public void setExistencia(Integer existencia) {
         this.existencia = existencia;
     }
+
+
 }
